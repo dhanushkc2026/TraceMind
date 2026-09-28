@@ -1,0 +1,343 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    background-color: #080a0f;
+    color: #f1f5f9;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Custom graphite scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090c12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2638;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2d374d;
+}
+
+/* Subtle Command Center Grid & Ambient Fog */
+.bg-command-grid {
+  background-color: #080a0f;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.08), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(245, 158, 11, 0.04), transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+}
+
+/* Realistic 3D Glassmorphism Panel with Ambient Occlusion */
+.glass-command {
+  background: linear-gradient(180deg, rgba(18, 24, 38, 0.72) 0%, rgba(10, 14, 23, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 10px 30px -5px rgba(0, 0, 0, 0.7),
+    0 1px 0 0 rgba(255, 255, 255, 0.12) inset,
+    0 -1px 0 0 rgba(0, 0, 0, 0.5) inset;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hero Glass Panel with Emerald/Gold Volumetric Depth */
+.glass-command-hero {
+  background: linear-gradient(180deg, rgba(16, 32, 28, 0.75) 0%, rgba(9, 16, 20, 0.88) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  box-shadow: 
+    0 14px 40px -10px rgba(0, 0, 0, 0.8),
+    0 0 35px -5px rgba(16, 185, 129, 0.15),
+    0 1px 0 0 rgba(255, 255, 255, 0.18) inset,
+    0 -1px 0 0 rgba(0, 0, 0, 0.6) inset;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gold Accent Glass Card */
+.glass-command-gold {
+  background: linear-gradient(180deg, rgba(32, 26, 14, 0.75) 0%, rgba(14, 13, 10, 0.88) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 
+    0 12px 35px -8px rgba(0, 0, 0, 0.75),
+    0 0 30px -5px rgba(245, 158, 11, 0.12),
+    0 1px 0 0 rgba(255, 255, 255, 0.16) inset;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 4. Tactile 3D Buttons with Physical Press & Hover Lift */
+.btn-3d-emerald {
+  background: linear-gradient(180deg, #059669 0%, #047857 55%, #065f46 100%);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  box-shadow: 
+    0 4px 14px rgba(5, 150, 105, 0.38),
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 -2px 0 rgba(0, 0, 0, 0.38) inset;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.01em;
+}
+
+.btn-3d-emerald:hover {
+  background: linear-gradient(180deg, #10b981 0%, #059669 55%, #047857 100%);
+  box-shadow: 
+    0 8px 24px rgba(16, 185, 129, 0.48),
+    0 1px 0 rgba(255, 255, 255, 0.38) inset,
+    0 -2px 0 rgba(0, 0, 0, 0.38) inset;
+  transform: translateY(-2px);
+}
+
+.btn-3d-emerald:active {
+  transform: translateY(1.5px);
+  box-shadow: 
+    0 2px 6px rgba(5, 150, 105, 0.3),
+    0 2px 3px rgba(0, 0, 0, 0.45) inset;
+}
+
+.btn-3d-gold {
+  background: linear-gradient(180deg, #d97706 0%, #b45309 55%, #92400e 100%);
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  box-shadow: 
+    0 4px 14px rgba(217, 119, 6, 0.38),
+    0 1px 0 rgba(255, 255, 255, 0.32) inset,
+    0 -2px 0 rgba(0, 0, 0, 0.38) inset;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.01em;
+}
+
+.btn-3d-gold:hover {
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 55%, #b45309 100%);
+  box-shadow: 
+    0 8px 26px rgba(245, 158, 11, 0.48),
+    0 1px 0 rgba(255, 255, 255, 0.42) inset,
+    0 -2px 0 rgba(0, 0, 0, 0.38) inset;
+  transform: translateY(-2px);
+}
+
+.btn-3d-gold:active {
+  transform: translateY(1.5px);
+  box-shadow: 
+    0 2px 6px rgba(217, 119, 6, 0.3),
+    0 2px 3px rgba(0, 0, 0, 0.45) inset;
+}
+
+.btn-3d-graphite {
+  background: linear-gradient(180deg, #1e2638 0%, #151b28 55%, #0d121c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 3px 10px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.14) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.45) inset;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.01em;
+}
+
+.btn-3d-graphite:hover {
+  background: linear-gradient(180deg, #2a354c 0%, #1c2436 55%, #121824 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.btn-3d-graphite:active {
+  transform: translateY(1.5px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) inset;
+}
+
+/* 3D Progress Step Node */
+.step-node-3d {
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-node-3d.step-completed {
+  background: linear-gradient(180deg, rgba(6, 78, 59, 0.7) 0%, rgba(4, 47, 36, 0.9) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  box-shadow: 0 4px 14px rgba(6, 78, 59, 0.3), 0 1px 0 rgba(255, 255, 255, 0.15) inset;
+  color: #a7f3d0;
+}
+
+.step-node-3d.step-active {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.25) 0%, rgba(245, 158, 11, 0.18) 100%);
+  border: 1px solid #fbbf24;
+  box-shadow: 
+    0 0 20px rgba(245, 158, 11, 0.3),
+    0 0 10px rgba(16, 185, 129, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  color: #fef3c7;
+}
+
+.step-node-3d.step-future {
+  background: linear-gradient(180deg, rgba(15, 20, 30, 0.6) 0%, rgba(9, 12, 18, 0.75) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  color: #64748b;
+}
+
+/* 1. Hindsight 3D Core Keyframes */
+@keyframes core-breathe {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 
+      0 12px 28px -6px rgba(0, 0, 0, 0.85),
+      0 0 20px rgba(16, 185, 129, 0.35),
+      0 0 35px rgba(245, 158, 11, 0.15);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 
+      0 16px 36px -6px rgba(0, 0, 0, 0.9),
+      0 0 30px rgba(16, 185, 129, 0.5),
+      0 0 45px rgba(245, 158, 11, 0.25);
+  }
+}
+
+.animate-core-breathe {
+  animation: core-breathe 4s ease-in-out infinite;
+}
+
+/* Extremely subtle rotation for outer energy ring */
+@keyframes spin-very-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-very-slow {
+  animation: spin-very-slow 24s linear infinite;
+}
+
+/* Subtle Floating Animation */
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-float-subtle {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+/* Recall Animated Flow Beam */
+@keyframes beam-flow {
+  0% {
+    stroke-dashoffset: 60;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-beam-flow {
+  stroke-dasharray: 6 5;
+  animation: beam-flow 1.6s linear infinite;
+}
+
+/* Learning Pulse Effect */
+@keyframes learning-pulse {
+  0% {
+    transform: scale(0.96);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.6), 0 0 60px rgba(245, 158, 11, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+  }
+}
+
+.animate-learning-pulse {
+  animation: learning-pulse 1.4s ease-out;
+}
+
+/* Core Gold Illuminate */
+@keyframes core-gold-flash {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(245, 158, 11, 0.75), 0 0 70px rgba(251, 191, 36, 0.5);
+  }
+}
+
+.animate-core-gold-flash {
+  animation: core-gold-flash 1.2s ease-in-out;
+}
+
+/* Subtle Specular Sheen on Hover */
+.sheen-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.sheen-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+
+.sheen-card:hover::before {
+  left: 150%;
+}
+
+/* Accessibility: Reduced-Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-core-breathe,
+  .animate-spin-very-slow,
+  .animate-float-subtle,
+  .animate-beam-flow,
+  .animate-learning-pulse,
+  .animate-core-gold-flash {
+    animation: none !important;
+  }
+}

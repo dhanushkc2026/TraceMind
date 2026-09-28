@@ -1,0 +1,58 @@
+[
+  {
+    "id": "INC-7012",
+    "title": "AuthService 401 Cascade during Secret Rollout",
+    "timestamp": "2026-08-10T14:22:00Z",
+    "service": "AuthService",
+    "severity": "HIGH",
+    "status": "RESOLVED",
+    "errorMessage": "SignatureVerificationException: Signature length not correct or secret key invalid",
+    "logs": "2026-08-10 14:21:40 WARN [TokenVerifier] Invalid JWT signature received for sub=usr_88291\n2026-08-10 14:22:05 ERROR [AuthFilter] 401 Unauthorized spike: 1,480 failures in 60s",
+    "symptoms": [
+      "Global user logouts",
+      "401 Unauthorized errors across all microservices"
+    ],
+    "rootCause": "Environment secret rotated on cluster secrets store before replica pods had new mount.",
+    "successfulResolution": "Synchronized Kubernetes Secret rollout and restarted auth pods with grace period.",
+    "failedApproaches": [
+      "Reverting ingress controller",
+      "Scaling up pod count"
+    ],
+    "runbookUsed": "RUNBOOK-AUTH-03: Secret Synchronization",
+    "developerFeedback": "Always provide dual-signing secret window during zero-downtime rotation.",
+    "finalOutcome": "SUCCESS",
+    "resolvedAt": "2026-08-10T14:45:00Z",
+    "hindsightMemoryId": "mem-seed-001",
+    "mttrMinutes": 44,
+    "investigationTimeMinutes": 35,
+    "isDemoSeed": true
+  },
+  {
+    "id": "INC-8902",
+    "title": "EventStreamService Kafka Consumer Rebalance Spike",
+    "timestamp": "2026-09-12T16:15:00Z",
+    "service": "EventStreamService",
+    "severity": "HIGH",
+    "status": "RESOLVED",
+    "errorMessage": "CommitFailedException: Commit cannot be completed since the group has already rebalanced",
+    "logs": "2026-09-12 16:14:50 WARN [ConsumerCoordinator] Offset commit failed on partition orders-0\n2026-09-12 16:15:10 ERROR [ConsumerNetworkClient] Heartbeat poll timeout expired",
+    "symptoms": [
+      "Consumer lag spike to 140,000 messages",
+      "Repeated partition rebalance loops"
+    ],
+    "rootCause": "max.poll.interval.ms set lower than batch processing duration for large media payloads.",
+    "successfulResolution": "Increased max.poll.interval.ms to 600000ms and tuned session.timeout.ms to 45000ms.",
+    "failedApproaches": [
+      "Adding more consumer instances (caused more rebalances)",
+      "Restarting Kafka brokers"
+    ],
+    "runbookUsed": "RUNBOOK-KAFKA-05: Consumer Group Stability & Rebalance Tuning",
+    "developerFeedback": "Tuning poll intervals stabilized group membership immediately.",
+    "finalOutcome": "SUCCESS",
+    "resolvedAt": "2026-09-12T17:03:00Z",
+    "hindsightMemoryId": "mem-seed-003",
+    "mttrMinutes": 48,
+    "investigationTimeMinutes": 38,
+    "isDemoSeed": true
+  }
+]

@@ -1,0 +1,173 @@
+[
+  {
+    "id": "mem-retained-inc1",
+    "bankId": "tracemind-sre-prod",
+    "type": "experience",
+    "incidentId": "INC-8041",
+    "timestamp": "2026-09-28T09:15:00Z",
+    "service": "PaymentService",
+    "content": "Incident [INC-8041] in PaymentService: Database Connection Pool Exhaustion on Checkout Flow. Root Cause: HikariCP maxPoolSize was set to default 10 connections while threads spiked to 120. Successful Resolution: Increased HikariCP maximumPoolSize to 50 and set connectionTimeout to 3000ms. Failed Attempts: Restarting replica pods (exhausted immediately again). MTTR: 38.0 mins.",
+    "context": "Incident Signature: HikariPool-1 - Connection is not available, request timed out after 30000ms. Symptoms: 504 Gateway Timeouts, pool starvation, 120 blocked threads.",
+    "entities": [
+      "PaymentService",
+      "PostgreSQL",
+      "HikariCP",
+      "ConnectionPool"
+    ],
+    "tags": [
+      "service:PaymentService",
+      "database",
+      "postgres",
+      "pool-exhaustion",
+      "hikaricp",
+      "timeout"
+    ],
+    "rootCause": "HikariCP maxPoolSize was set to default 10 connections while worker threads spiked to 120.",
+    "successfulResolution": "Increased HikariCP maximumPoolSize to 50 and set connectionTimeout to 3000ms.",
+    "failedApproaches": [
+      "Restarting replica pods (exhausted immediately again)"
+    ],
+    "runbookUsed": "RUNBOOK-DB-09: Connection Pool Sizing & Hikari Tuning",
+    "feedback": "Increasing pool size solved the bottleneck in 90 seconds. Documented for future services.",
+    "outcome": "SUCCESS",
+    "mttrMinutes": 38,
+    "isDemoSeed": false
+  },
+  {
+    "id": "mem-seed-001",
+    "bankId": "tracemind-sre-prod",
+    "type": "experience",
+    "incidentId": "INC-7012",
+    "timestamp": "2026-08-10T14:22:00Z",
+    "service": "AuthService",
+    "content": "JWT signing secret mismatch caused 401 Unauthorized cascade during rolling deployment.",
+    "context": "AuthService v2.4 rollout with dual secret rotation across US-East cluster.",
+    "entities": [
+      "AuthService",
+      "jwt",
+      "secret-rotation",
+      "k8s-deployment"
+    ],
+    "tags": [
+      "service:AuthService",
+      "auth",
+      "jwt",
+      "deployment",
+      "secrets"
+    ],
+    "rootCause": "Environment secret rotated on cluster secrets store before replica pods had new mount.",
+    "successfulResolution": "Synchronized Kubernetes Secret rollout and restarted auth pods with grace period.",
+    "failedApproaches": [
+      "Reverting ingress controller",
+      "Scaling up pod count"
+    ],
+    "runbookUsed": "RUNBOOK-AUTH-03: Secret Synchronization & Pod Graceful Bounce",
+    "feedback": "Worked immediately. Remember to never rotate auth secrets without 10-minute dual-sign window.",
+    "outcome": "SUCCESS",
+    "mttrMinutes": 44,
+    "isDemoSeed": true
+  },
+  {
+    "id": "mem-seed-002",
+    "bankId": "tracemind-sre-prod",
+    "type": "experience",
+    "incidentId": "INC-7419",
+    "timestamp": "2026-08-18T11:30:00Z",
+    "service": "StorageGateway",
+    "content": "AWS S3 multipart upload 403 Forbidden due to IAM role session token expiration during bulk sync.",
+    "context": "Bulk archive sync workers failed after 1-hour IAM STS session timeout.",
+    "entities": [
+      "StorageGateway",
+      "AWS-S3",
+      "IAM",
+      "STS-Token"
+    ],
+    "tags": [
+      "service:StorageGateway",
+      "storage",
+      "s3",
+      "iam",
+      "aws",
+      "tokens"
+    ],
+    "rootCause": "IAM AssumeRole duration set to 3600s while background batch sync required 4 hours.",
+    "successfulResolution": "Configured STS maxSessionDuration to 14400s and implemented token refresh middleware.",
+    "failedApproaches": [
+      "Increasing HTTP client socket timeouts",
+      "Retrying without token renewal"
+    ],
+    "runbookUsed": "RUNBOOK-IAM-02: STS Token Duration Configuration",
+    "feedback": "Setting auto-refresh resolved all background multipart sync stalls.",
+    "outcome": "SUCCESS",
+    "mttrMinutes": 52,
+    "isDemoSeed": true
+  },
+  {
+    "id": "mem-seed-003",
+    "bankId": "tracemind-sre-prod",
+    "type": "experience",
+    "incidentId": "INC-8902",
+    "timestamp": "2026-09-12T16:15:00Z",
+    "service": "EventStreamService",
+    "content": "Kafka consumer group rebalance storm caused 15-minute message processing lag spike.",
+    "context": "Heavy partition rebalance loop triggered by aggressive heartbeat timeouts on node scaling.",
+    "entities": [
+      "EventStreamService",
+      "Kafka",
+      "ConsumerGroup",
+      "Rebalance"
+    ],
+    "tags": [
+      "service:EventStreamService",
+      "kafka",
+      "event-stream",
+      "partitions",
+      "consumer-lag"
+    ],
+    "rootCause": "max.poll.interval.ms set lower than batch processing duration for large media payloads.",
+    "successfulResolution": "Increased max.poll.interval.ms to 600000ms and tuned session.timeout.ms to 45000ms.",
+    "failedApproaches": [
+      "Adding more consumer instances (caused more rebalances)",
+      "Restarting Kafka brokers"
+    ],
+    "runbookUsed": "RUNBOOK-KAFKA-05: Consumer Group Stability & Rebalance Tuning",
+    "feedback": "Tuning poll intervals stabilized group membership immediately.",
+    "outcome": "SUCCESS",
+    "mttrMinutes": 48,
+    "isDemoSeed": true
+  },
+  {
+    "id": "mem-seed-004",
+    "bankId": "tracemind-sre-prod",
+    "type": "experience",
+    "incidentId": "INC-7640",
+    "timestamp": "2026-09-19T08:05:00Z",
+    "service": "IngressGateway",
+    "content": "NGINX ingress 502 Bad Gateway under bulk asset uploads due to client_max_body_size and proxy buffer exhaustion.",
+    "context": "Content ingestion API spiked to 50MB file uploads exceeding default 1MB ingress buffer.",
+    "entities": [
+      "IngressGateway",
+      "NGINX",
+      "ReverseProxy",
+      "BufferOverflow"
+    ],
+    "tags": [
+      "service:IngressGateway",
+      "ingress",
+      "nginx",
+      "buffers",
+      "gateway-502"
+    ],
+    "rootCause": "Default proxy_buffers config (8 4k) overwhelmed by concurrent multipart upload chunks.",
+    "successfulResolution": "Increased proxy_buffer_size to 128k, proxy_buffers to 4 256k, and client_max_body_size to 100m.",
+    "failedApproaches": [
+      "Restarting backend API pods",
+      "Bypassing Cloudflare CDN"
+    ],
+    "runbookUsed": "RUNBOOK-INGRESS-02: Buffer Tuning & Payload Limits",
+    "feedback": "Tuning proxy buffers resolved all 502s immediately.",
+    "outcome": "SUCCESS",
+    "mttrMinutes": 34,
+    "isDemoSeed": true
+  }
+]
